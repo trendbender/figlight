@@ -1,16 +1,35 @@
 {
   "name": "figlight",
-  "version": "1.0.0",
-  "description": "A tiny lightbox that keeps your captions. No dependencies, 2.3 KB gzipped, MIT.",
+  "version": "1.0.1",
+  "description": "A tiny lightbox that keeps your captions. No dependencies, MIT, free on commercial sites.",
   "main": "dist/figlight.js",
-  "module": "dist/figlight.js",
+  "module": "dist/figlight.mjs",
+  "exports": {
+    ".": {
+      "import": "./dist/figlight.mjs",
+      "require": "./dist/figlight.js",
+      "default": "./dist/figlight.js"
+    },
+    "./min": "./dist/figlight.min.js",
+    "./package.json": "./package.json"
+  },
   "unpkg": "dist/figlight.min.js",
+  "jsdelivr": "dist/figlight.min.js",
   "files": ["dist", "src", "README.md", "LICENSE"],
-  "keywords": ["lightbox", "gallery", "figcaption", "image-viewer", "vanilla-js", "no-dependencies", "zero-dependency"],
+  "scripts": {
+    "build": "node scripts/build.js",
+    "test": "node --test test/",
+    "prepublishOnly": "npm run build && npm test"
+  },
+  "keywords": ["lightbox", "gallery", "figcaption", "image-viewer", "vanilla-js", "no-dependencies", "zero-dependency", "fancybox-alternative", "mit"],
   "author": "Dmitrii Dmitriev",
   "license": "MIT",
   "repository": { "type": "git", "url": "git+https://github.com/trendbender/figlight.git" },
-  "homepage": "https://github.com/trendbender/figlight",
+  "homepage": "https://4queries.com/tools/figlight/",
   "bugs": { "url": "https://github.com/trendbender/figlight/issues" },
-  "sideEffects": true
+  "sideEffects": true,
+  "devDependencies": {
+    "jsdom": "^24.1.3",
+    "terser": "^5.31.6"
+  }
 }

@@ -1,43 +1,55 @@
 # figlight
 
-A tiny lightbox that keeps your captions. One file, no dependencies, **2.3 KB gzipped**.
+A tiny lightbox that keeps your captions. One file, no dependencies, **2.3 KB gzipped**, MIT.
 
-Click a photo, it opens full screen with the caption your page already wrote — credits, licence and links included. Arrow keys and swipe move between images, `Esc` closes.
+Click a photo and it opens full screen with the caption your page already wrote, credits, licence and links included. Arrow keys and swipe move between images, `Esc` closes.
 
-**[Live demo](https://trendbender.github.io/figlight/demo/)**
+**[Live demo](https://trendbender.github.io/figlight/demo/)** · **[Home page](https://4queries.com/tools/figlight/)**
 
 ## Why another lightbox
 
-Fancybox is the usual answer, and it is excellent — but its free licence is GPLv3, so a commercial site needs a paid one. figlight is MIT: free for anything, including commercial work, with no licence to buy and no attribution banner.
+Fancybox is the usual answer, and it is excellent. It also needs a [paid licence](https://fancyapps.com/license/) for every live site, [from €29](https://fancyapps.com/pricing/). figlight is MIT: free for anything, commercial work included, with no attribution banner.
 
-It is also small. The whole thing is 2.3 KB gzipped against roughly 20 KB for the alternatives, and it adds no `<link>`, no font, no network request of its own.
+figlight does one job: photos with captions. If you need more, use something else.
+
+**What figlight does not do:** no zoom or pinch, no thumbnails, no video, iframes or PDF, no themes. It has no separate React or Vue layer.
+
+## How it compares
+
+Checked on 6 November 2026. Size is the published JS plus CSS from npm, compressed with `gzip -9`.
+
+| | figlight 1.0.1 | Fancybox 6.1.15 | PhotoSwipe 5.4.4 | GLightbox 3.3.1 | baguetteBox 1.13.0 |
+|---|---|---|---|---|---|
+| Licence | MIT | Paid for every live site | MIT | MIT | MIT |
+| Size | 2.3 KB | 43.2 KB | 23.5 KB | 17.9 KB | 4.6 KB |
+| Captions | Reads `<figcaption>`, keeps HTML | Yes | Custom code or plugin | `title` and `description`, HTML allowed | `title` or `data-caption` |
+| Zoom | No | Yes | Yes | Yes | Not in its docs |
+| Video | No | Yes | Not in its docs | Yes | Not in its docs |
+
+Need zoom or video on a commercial site without a licence fee? GLightbox and PhotoSwipe are good choices. Pick figlight when the page already has captions and you want one line and nothing else.
 
 ## Install
 
 Drop one line at the end of the page:
 
 ```html
-<script src="figlight.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/trendbender/figlight@1.0.1/dist/figlight.min.js"></script>
 ```
 
 That is it. Every `<figure><img></figure>` on the page becomes clickable.
 
-From a CDN:
-
-```html
-<script src="https://cdn.jsdelivr.net/gh/trendbender/figlight@1.0.0/dist/figlight.min.js"></script>
-```
-
-As a module:
+With a bundler (npm package pending):
 
 ```js
-import figlight from './figlight.js';
+import figlight from 'figlight';
 figlight.create({selector: '.gallery img'});
 ```
 
+An import does not start on its own, so you always call `create()`. A plain script tag starts by itself.
+
 ## Options
 
-Pass them to `figlight.create()`. To stop the automatic start, add `data-figlight="manual"` to the script tag.
+Pass them to `figlight.create()`. To stop the automatic start of a script tag, add `data-figlight="manual"` to it.
 
 | Option | Default | What it does |
 |---|---|---|
@@ -67,6 +79,8 @@ Returns `{open(i), close(), refresh(), destroy()}`. Call `refresh()` after you a
 - **Skips icons.** Anything under `minWidth` is ignored, so logos and sprites do not open.
 - **Locks the page behind the overlay** and gives focus back to where it was on close.
 
+A caption function returns HTML that figlight inserts as is, so escape anything that comes from your users.
+
 ## Keyboard and screen readers
 
 | Key | Action |
@@ -79,10 +93,18 @@ The overlay is a `role="dialog"` with `aria-modal="true"`, focus moves to the cl
 
 ## Browser support
 
-Any browser with `Element.closest` and `:is` — Chrome, Edge, Firefox, Safari, and their mobile versions. No polyfills, no transpiling.
+Any browser with `Element.closest`: Chrome, Edge, Firefox, Safari and their mobile versions. No polyfills, no transpiling. Tests run in jsdom, not in real browsers: please [open an issue](https://github.com/trendbender/figlight/issues) if a device misbehaves.
+
+## Development
+
+```bash
+npm install
+npm run build
+npm test
+```
 
 ## Licence
 
 MIT. Use it anywhere, commercial included. Attribution is welcome, not required.
 
-Built for [seo-engine](https://github.com/trendbender), which publishes articles with maps and credited photos, where the caption under the photo is not decoration but a licence requirement.
+Built by [4Queries](https://4queries.com/tools/) for articles with credited photos, where the caption under the photo is a licence requirement. More free tools: [4queries.com/tools](https://4queries.com/tools/).

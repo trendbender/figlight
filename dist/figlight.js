@@ -1,5 +1,5 @@
 /*!
- * figlight 1.0.0 — a tiny lightbox that keeps your captions.
+ * figlight 1.0.1: a tiny lightbox that keeps your captions.
  * https://github.com/trendbender/figlight
  * MIT License. Free for any use, commercial included.
  *
@@ -195,11 +195,12 @@
     };
   }
 
-  /* Auto-start with the defaults unless the page opts out with data-figlight="manual". */
-  var api = {create: create, version: '1.0.0'};
+  /* A plain <script> tag starts with the defaults unless it opts out with data-figlight="manual".
+     An import or require has no current script, so it never starts on its own: call create(). */
+  var api = {create: create, version: '1.0.1'};
   if (typeof document !== 'undefined') {
     var tag = document.currentScript;
-    if (!tag || tag.dataset.figlight !== 'manual') api.auto = create();
+    if (tag && tag.dataset.figlight !== 'manual') api.auto = create();
   }
   return api;
 }));
